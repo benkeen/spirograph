@@ -1,3 +1,5 @@
+var counter = 100;
+
 var spiro = {
 
 	canvas: null,
@@ -8,40 +10,55 @@ var spiro = {
 	innerRadius: null,
 	penPoint: null,
 
+	theta: null,
+	l: null,
+	k: null,
+
+	interval: null,
+
 
 	// convert to regular cartesian coordinates
-	convertToCartesian: function(wid, ht) {
-		spiro.ctx.translate(wid/2, ht/2); // move origin
-		spiro.ctx.scale(1,-1); // invert the axes
+	convertToCartesian: function(width, height) {
+		spiro.ctx.translate(width/2, height/2); // move origin
+		spiro.ctx.scale(1, -1); // invert the axes
 	},
 
 	// draw the spirograph
-	draw: function(wid, ht) {
-		var l = spiro.penPoint / spiro.innerRadius;
-		var k = spiro.innerRadius / spiro.outerRadius;
+	draw: function(width, height) {
+		spiro.l = spiro.penPoint / spiro.innerRadius;
+		spiro.k = spiro.innerRadius / spiro.outerRadius;
 
 		// clear the draw area
 		spiro.ctx.fillStyle = "#ffffff";
-		spiro.ctx.fillRect(wid/-2, ht/-2, wid, ht);
-
+		spiro.ctx.fillRect(width / -2, height / -2, width, height);
 		spiro.ctx.beginPath();
-		spiro.ctx.strokeStyle = "rgba(100, 100, 100, 1)";
+		spiro.ctx.strokeStyle = "rgba(50, 200, 255, 0.1)";
 
-
-		for (var theta=1; theta<=20000; theta += 1) {
-			var t = (Math.PI / 180) * theta;
-			var ang = ((l-k)/k) * t;
-			var x = spiro.outerRadius * ((1-k) * Math.cos(t) + ((l*k) * Math.cos(ang)));
-			var y = spiro.outerRadius * ((1-k) * Math.sin(t) - ((l*k) * Math.sin(ang)));
-			spiro.ctx.lineTo(x, y);
-		}
-		spiro.ctx.stroke();
-		spiro.ctx.closePath();
+		spiro.theta = 0;
+		spiro.interval = setInterval(function() { spiro.nextLine(); }, 2);
 	},
 
-	// generate random number within range
-	getRandomNumber: function(start, end) {
-		return (Math.floor((Math.random() * (end-start))) + start);
+	nextLine: function() {
+		var t = (Math.PI / 180) * spiro.theta;
+		var ang = ((spiro.l-spiro.k)/spiro.k) * t;
+		var x = spiro.outerRadius * ((1 - spiro.k) * Math.cos(t) + ((spiro.l * spiro.k) * Math.cos(ang)));
+		var y = spiro.outerRadius * ((1 - spiro.k) * Math.sin(t) - ((spiro.l * spiro.k) * Math.sin(ang)));
+
+		if (spiro.theta === 0) {
+			spiro.originalX = x;
+			spiro.originalY = y;
+		} else {
+			if (x === spiro.originalX && y === spiro.originalY) {
+				alert("done!");
+			}
+			console.log(ang);
+		}
+
+		spiro.ctx.lineTo(x, y);
+		spiro.ctx.stroke();
+		//spiro.ctx.closePath();
+
+		spiro.theta++;
 	},
 
 	updateSpirograph: function() {
