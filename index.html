@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Polymer experiments - spirograph</title>
+	<script src="resources/jquery-2.0.0.min.js"></script>
+	<script src="resources/spirograph.js"></script>
+</head>
+<body>
+
+	<h1>Tinkering with Polymer</h1>
+
+	<p>
+		First step: write a simple, user-configurable spirograph.
+	</p>
+
+	<ul>
+		<li>Outer Radius: <input type="range" class="options" id="outerRadius" value="300" min="10" max="600" /></li>
+		<li>Inner Radius: <input type="range" class="options" id="innerRadius" value="50" min="10" max="600" /></li>
+		<li>Pen Point: <input type="range" class="options" id="penPoint" value="50" min="10" max="600" /></li>
+	</ul>
+
+	<input type="radio" id="setup" name="visualization" />
+		<label for="setup">Show setup</label>
+	<input type="radio" id="spirograph" name="visualization" checked="checked" />
+		<label for="spirograph">Show spirograph</label>
+	<br />
+
+	<canvas id="canvas" width="800" height="600" style="border-style:solid; border-width:1px; background-color:#ffffff;"></canvas>
+
+</body>
+</html>
+
+
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Menu</title>
+	<script src="polymer/polymer.js"></script>
+	<link rel="import" href="toolkit-ui/elements/g-menu.html">
+	<link rel="import" href="toolkit-ui/elements/g-menu-item.html">
+	<style>
+		body {
+			font-family: 'Helvetica Neue', Helvetica, Arial, 'open sans', sans-serif;
+		}
+	</style>
+</head>
+<body>
+
+<g-menu selected="2">
+	<g-menu-item src="images/comment.png">Post a Comment</g-menu-item>
+	<g-menu-item src="images/hangout.png">Share Link</g-menu-item>
+	<g-menu-item src="images/mail.png">Email Link</g-menu-item>
+	<g-menu-item src="images/favorite.png">Add to Favorites</g-menu-item>
+</g-menu>
+
+</body>
+</html>
+-->
