@@ -1,59 +1,105 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="nojs ms lt_ie7" lang="en">
+<![endif]-->
+
+<!--[if IE 7]>
+<html class="nojs ms ie7" lang="en">
+<![endif]-->
+
+<!--[if IE 8]>
+<html class="nojs ms ie8" lang="en">
+<![endif]-->
+
+<!--[if gt IE 8]>
+<html class="nojs ms" lang="en">
+<![endif]-->
+
+<html lang="en">
 <head>
-	<title>Polymer experiments - spirograph</title>
-	<script src="resources/jquery-2.0.0.min.js"></script>
-	<script src="resources/spirograph.js"></script>
+    <title>Polymer experiments - spirograph</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="iKreativ">
+    <meta name="description" content="Workless - A classy HTML5, CSS3 framework">
+    <meta name="keywords" content="workless, classy, css, framework, jquery, bootstrap, h5bp, twitter, bolierplate, jquery, html5, ikreativ">
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <meta name="viewport" content="width=device-width">
+    <link href="assets/css/minified.css.php" rel="stylesheet">
+    <script type="text/javascript" src="assets/js/modernizr.js"></script>
+    <script src="assets/js/ie_font.js"></script>
+    <style type="text/css">
+    #spirographSettings ul {
+        padding: 0px;
+        margin: 0px;
+        list-style-type: none;
+    }
+    #spirographSettings .slider {
+        float: right;
+        width: 100px
+    }
+    #spirographSettings li {
+        clear: both;
+    }
+    </style>
 </head>
-<body>
 
-	<h1>Tinkering with Polymer</h1>
+<body class="blueish" id="top" onload="prettyPrint()">
 
-	<p>
-		First step: write a simple, user-configurable spirograph.
-	</p>
+<section class="boxed">
 
-	<ul>
-		<li>Outer Radius: <input type="range" class="options" id="outerRadius" value="300" min="10" max="600" /></li>
-		<li>Inner Radius: <input type="range" class="options" id="innerRadius" value="50" min="10" max="600" /></li>
-		<li>Pen Point: <input type="range" class="options" id="penPoint" value="45" min="10" max="600" /></li>
-	</ul>
+    <section id="main">
 
-	<input type="radio" id="setup" name="visualization" />
-		<label for="setup">Show setup</label>
-	<input type="radio" id="spirograph" name="visualization" checked="checked" />
-		<label for="spirograph">Show spirograph</label>
-	<br />
+        <h1 style="margin: 0px">Spirograph</h1>
+        <hr />
 
-	<canvas id="canvas" width="800" height="600" style="border-style:solid; border-width:1px; background-color:#ffffff;"></canvas>
+        <div class="one_third" id="spirographSettings">
+            <ul>
+                <li>
+                    <label>Outer Radius:</label>
+                    <input type="range" class="slider options" id="outerRadius" value="250" min="10" max="250" />
+                </li>
+                <li>
+                    <label>Inner Radius:</label>
+                    <input type="range" class="slider options" id="innerRadius" value="182" min="10" max="200" />
+                </li>
+                <li>
+                    <label>Pen Point:</label>
+                    <input type="range" class="slider options" id="penPoint" value="182" min="10" max="200" />
+
+                    <hr size="1" />
+                </li>
+                <li>
+                    <input type="checkbox" id="animate" checked="checked" />
+                    <label for="animate">Animate</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="showBorders" />
+                    <label for="showBorders">Show borders</label>
+                </li>
+            </ul>
+
+            <hr />
+
+            <button class="alignleft button blue" id="start">Start &raquo;</button>
+        </div>
+
+        <div class="two_thirds">
+            <canvas id="canvas" width="500" height="500" style="border: 1px solid #999999; background-color:#ffffff;"></canvas>
+        </div>
+
+        <footer class="one_full">
+
+        </footer>
+
+    </section>
+
+</section>
+
+<script src="assets/js/plugins.js"></script>
+<script src="assets/js/application.js"></script>
+<script src="resources/jquery-2.0.0.min.js"></script>
+<script src="resources/spirograph.js"></script>
 
 </body>
 </html>
-
-
-<!--
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Menu</title>
-	<script src="polymer/polymer.js"></script>
-	<link rel="import" href="toolkit-ui/elements/g-menu.html">
-	<link rel="import" href="toolkit-ui/elements/g-menu-item.html">
-	<style>
-		body {
-			font-family: 'Helvetica Neue', Helvetica, Arial, 'open sans', sans-serif;
-		}
-	</style>
-</head>
-<body>
-
-<g-menu selected="2">
-	<g-menu-item src="images/comment.png">Post a Comment</g-menu-item>
-	<g-menu-item src="images/hangout.png">Share Link</g-menu-item>
-	<g-menu-item src="images/mail.png">Email Link</g-menu-item>
-	<g-menu-item src="images/favorite.png">Add to Favorites</g-menu-item>
-</g-menu>
-
-</body>
-</html>
--->
