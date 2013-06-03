@@ -1,0 +1,18 @@
+body {
+    padding: 30px;
+    font-family: "proxima-nova",sans-serif;
+    line-height: 17pt;
+}
+
+#spirographSettings ul {
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+}
+#spirographSettings .slider {
+    float: right;
+    width: 100px
+}
+#spirographSettings li {
+    clear: both;
+}
