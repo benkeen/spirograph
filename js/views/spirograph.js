@@ -1,37 +1,43 @@
 var app = app || {};
 
 /**
- * Our main View. Right now this doesn't contain much: but the idea is that at some point
- * we'll add the ability to have multiple spirographs on screen at a time.
- * @type {*}
- */
+* Our main View. Right now this doesn't contain much: but the idea is that at some point
+* we'll add the ability to have multiple spirographs on screen at a time.
+* @type {*}
+*/
 app.SpirographView = Backbone.View.extend({
 
-	// controlled via settings
-	outerRadius: null,
-	innerRadius: null,
-	penPoint: null,
-	showBorders: false,
+	tagName: "li",
 
-	// misc private vars
+	// misc private vars (model, too?)
 	ctx: null,
 	theta: null,
 	l: null,
 	k: null,
 	interval: null,
-
-	el: "#spirographs",
 	canvas: null,
 
 
+	template: _.template($('#spirograph-template').html()),
+
 	initialize: function() {
-		this.canvas = $(this.el).find("#canvas")[0];
-		this.ctx = this.canvas.getContext("2d");
+
+	},
+
+	render: function() {
+		var params = this.model.toJSON();
+		params.cid = this.model.cid;
+
+		this.$el.html(this.template(params));
+		this.canvas = $(this.$el).find(".canvas")[0];
+		this.ctx    = this.canvas.getContext("2d");
 		this.convertToCartesian();
+
+		return this;
 	},
 
 	events: {
-		"click #start": "updateSpirograph"
+		"click .startButton": "updateSpirograph"
 	},
 
 	// convert to regular cartesian coordinates
@@ -47,17 +53,15 @@ app.SpirographView = Backbone.View.extend({
 
 	// draw the spirograph
 	draw: function() {
+		// what are these, exactly?
+		this.l = this.model.attributes.penPoint / this.model.attributes.innerRadius;
+		this.k = this.model.attributes.innerRadius / this.model.attributes.outerRadius;
 
-		// what are these?
-		this.l = this.penPoint / this.innerRadius;
-		this.k = this.innerRadius / this.outerRadius;
-
-		// clear the draw area
-		if (this.showBorders) {
+		if (this.model.attributes.showBorders) {
 			this.ctx.beginPath();
 			this.ctx.strokeStyle = "black";
-			this.ctx.lineWidth = 1;
-			this.ctx.arc(0, 0, this.outerRadius, 0, (Math.PI*180) * 360, false);
+			this.ctx.lineWidth = 0.05;
+			this.ctx.arc(0, 0, this.model.attributes.outerRadius, 0, (Math.PI*180) * 360, false);
 			this.ctx.stroke();
 			this.ctx.closePath();
 		}
@@ -66,11 +70,12 @@ app.SpirographView = Backbone.View.extend({
 		this.ctx.beginPath();
 		this.theta = 0;
 
-		if (this.animate) {
+		if (this.model.attributes.animate) {
 			var currView = this;
 			this.interval = setInterval(function() { currView.nextLine(); }, 1);
 		} else {
-			for (var i=0; i<20000; i++) {
+			//
+			for (var i=0; i<4000; i++) {
 				this.nextLine();
 			}
 		}
@@ -79,8 +84,8 @@ app.SpirographView = Backbone.View.extend({
 	nextLine: function() {
 		var t = (Math.PI / 180) * this.theta;
 		var ang = ((this.l-this.k)/this.k) * t;
-		var x = this.outerRadius * ((1 - this.k) * Math.cos(t) + ((this.l * this.k) * Math.cos(ang)));
-		var y = this.outerRadius * ((1 - this.k) * Math.sin(t) - ((this.l * this.k) * Math.sin(ang)));
+		var x = this.model.attributes.outerRadius * ((1 - this.k) * Math.cos(t) + ((this.l * this.k) * Math.cos(ang)));
+		var y = this.model.attributes.outerRadius * ((1 - this.k) * Math.sin(t) - ((this.l * this.k) * Math.sin(ang)));
 
 		this.ctx.strokeStyle = "rgba(50, 140, 255, 0.1)";
 		this.ctx.lineTo(x, y);
@@ -93,11 +98,7 @@ app.SpirographView = Backbone.View.extend({
 			clearInterval(this.interval);
 		}
 
-		this.outerRadius = parseInt($("#outerRadius").val(), 10);
-		this.innerRadius = parseInt($("#innerRadius").val(), 10);
-		this.penPoint    = parseInt($("#penPoint").val(), 10);
-		this.animate     = $("#animate")[0].checked;
-		this.showBorders = $("#showBorders")[0].checked;
+		// update the buttons
 
 		this.draw();
 	}

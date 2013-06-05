@@ -1,4 +1,4 @@
 spirograph
 ==========
 
-Tinkering around with Polymer.
+Tinkering around with Backbone, pureCSS and other new fun stuff.

@@ -4,15 +4,10 @@ body {
     line-height: 17pt;
 }
 
-#spirographSettings ul {
-    padding: 0px;
+#spirographs {
     margin: 0px;
-    list-style-type: none;
+    padding-left: 8px;
 }
-#spirographSettings .slider {
-    float: right;
-    width: 100px
-}
-#spirographSettings li {
-    clear: both;
+#spirographs>li {
+    float: left;
 }
