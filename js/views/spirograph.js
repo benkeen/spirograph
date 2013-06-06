@@ -17,11 +17,10 @@ app.SpirographView = Backbone.View.extend({
 	interval: null,
 	canvas: null,
 
-
 	template: _.template($('#spirograph-template').html()),
 
 	initialize: function() {
-
+		this.listenTo(this.model, 'change', this.render);
 	},
 
 	render: function() {
@@ -53,9 +52,6 @@ app.SpirographView = Backbone.View.extend({
 
 	// draw the spirograph
 	draw: function() {
-		// what are these, exactly?
-		this.l = this.model.attributes.penPoint / this.model.attributes.innerRadius;
-		this.k = this.model.attributes.innerRadius / this.model.attributes.outerRadius;
 
 		if (this.model.attributes.showBorders) {
 			this.ctx.beginPath();
@@ -67,39 +63,68 @@ app.SpirographView = Backbone.View.extend({
 		}
 
 		// now start drawing the spirograph
-		this.ctx.beginPath();
 		this.theta = 0;
+
+		// figure out when we need to stop loopin'
+		this.max = (this.model.attributes.innerRadius / this.greatestCommonDivisor(this.model.attributes.outerRadius, this.model.attributes.innerRadius));
 
 		if (this.model.attributes.animate) {
 			var currView = this;
-			this.interval = setInterval(function() { currView.nextLine(); }, 1);
+			this.interval = setInterval(function() { currView.nextLine(); }, 30);
 		} else {
-			//
-			for (var i=0; i<4000; i++) {
+			for (var i=0; i<1000; i++) {
 				this.nextLine();
 			}
 		}
 	},
 
 	nextLine: function() {
-		var t = (Math.PI / 180) * this.theta;
-		var ang = ((this.l-this.k)/this.k) * t;
-		var x = this.model.attributes.outerRadius * ((1 - this.k) * Math.cos(t) + ((this.l * this.k) * Math.cos(ang)));
-		var y = this.model.attributes.outerRadius * ((1 - this.k) * Math.sin(t) - ((this.l * this.k) * Math.sin(ang)));
+		this.ctx.beginPath();
+		this.ctx.lineWidth = 2;
+		this.ctx.strokeStyle = "rgba(50, 150, 255, 0.5)";
 
-		this.ctx.strokeStyle = "rgba(50, 140, 255, 0.1)";
-		this.ctx.lineTo(x, y);
+		for (var i=0; i<this.model.attributes.speed; i++) {
+			if (this.theta / Math.PI / 2 > this.max) {
+				break;
+			}
+			this.batchedLineTo();
+		}
 		this.ctx.stroke();
-		this.theta++;
+
+		if (this.theta / (Math.PI * 2) > this.max) {
+			clearInterval(this.interval);
+		}
+	},
+
+	batchedLineTo: function() {
+		var val1 = this.theta * (1 - this.model.attributes.outerRadius / this.model.attributes.innerRadius);
+		var val2 = this.model.attributes.innerRadius - this.model.attributes.outerRadius;
+		var x = Math.cos(this.theta) * val2 + this.model.attributes.penPoint * Math.cos(val1);
+		var y = Math.sin(this.theta) * val2 + this.model.attributes.penPoint * Math.sin(val1);
+		this.ctx.moveTo(x, y);
+
+		this.theta += 0.01;
+		val1 = this.theta * (1 - this.model.attributes.outerRadius / this.model.attributes.innerRadius);
+		val2 = this.model.attributes.innerRadius - this.model.attributes.outerRadius;
+		x = Math.cos(this.theta) * val2 + this.model.attributes.penPoint * Math.cos(val1);
+		y = Math.sin(this.theta) * val2 + this.model.attributes.penPoint * Math.sin(val1);
+		this.ctx.lineTo(x, y);
 	},
 
 	updateSpirograph: function() {
 		if (this.interval !== null) {
 			clearInterval(this.interval);
 		}
-
-		// update the buttons
-
 		this.draw();
+	},
+
+	greatestCommonDivisor: function(a, b) {
+		var t;
+		while (b != 0) {
+			b = a % (t = b);
+			a = t;
+		}
+		return a;
 	}
+
 });

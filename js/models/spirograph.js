@@ -7,6 +7,7 @@ app.Spirograph = Backbone.Model.extend({
 		outerRadius: 250,
 		innerRadius: 182,
 		penPoint: 182,
+		speed: 100,
 		animate: true,
 		showBorders: false
 	},

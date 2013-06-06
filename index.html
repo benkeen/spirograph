@@ -4,55 +4,83 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-    <link href="assets/css/pure.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/spirograph.css" rel="stylesheet">
 </head>
 <body>
 
-<header>
-	<h1>Backbone tests</h1>
+<header id="navbar">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div style="width: auto;" class="container">
+				<a href="#" class="brand">Spirograph</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">Github</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </header>
 
-<ol id="spirographs"></ol>
+<section>
+	<ol id="spirographs"></ol>
+</section>
 
 <script type="text/template" id="spirograph-template">
-	<div>
-		<ul>
-			<li>
-				<label>Outer Radius:</label>
-				<input type="range" class="slider" id="outerRadius<%= cid %>" value="<%= outerRadius %>" min="10" max="250" />
-			</li>
-			<li>
-				<label>Inner Radius:</label>
-				<input type="range" class="slider" id="innerRadius<%= cid %>" value="<%= innerRadius %>" min="10" max="200" />
-			</li>
-			<li>
-				<label>Pen Point:</label>
-				<input type="range" class="slider" id="penPoint<%= cid %>" value="<%= penPoint %>" min="10" max="200" />
+	<div class="well">
+		<table class="table">
+			<tr>
+				<td><label for="outerRadius<%= cid %>">Outer Radius:</label></td>
+				<td>
+					<input type="range" class="controls" id="outerRadius<%= cid %>" value="<%= outerRadius %>" min="10" max="250" />
+				</td>
+			</tr>
+			<tr>
+				<td><label class="innerRadius<%= cid %>">Inner Radius:</label></td>
+				<td>
+					<input type="range" class="slider" id="innerRadius<%= cid %>" value="<%= innerRadius %>" min="10" max="200" />
+				</td>
+			</tr>
+			<tr>
+				<td><label class="penPoint<%= cid %>">Pen Point:</label></td>
+				<td>
+					<input type="range" class="slider" id="penPoint<%= cid %>" value="<%= penPoint %>" min="10" max="200" />
+				</td>
+			</tr>
+			<tr>
+				<td><label class="penPoint<%= cid %>">Speed:</label></td>
+				<td>
+					<input type="range" class="slider" id="speed<%= cid %>" value="<%= speed %>" min="10" max="300" />
+				</td>
+			</tr>
+			<!--
+			<tr>
+				<td>
+					<input type="checkbox" style="float: left;" id="animate<%= cid %>" <%= animate ? 'checked="checked"' : '' %> />
+					<label for="animate<%= cid %>">Animate</label>
+				</td>
+				<td>
+					<input style="float: left;" type="checkbox" id="showBorders<%= cid %>" <%= showBorders ? 'checked="checked"' : '' %> />
+					<label for="showBorders<%= cid %>">Show borders</label>
+				</td>
+			</tr>
+			-->
+		</table>
 
-				<hr size="1" />
-			</li>
-			<li>
-				<input type="checkbox" id="animate<%= cid %>" <%= animate ? 'checked="checked"' : '' %> />
-				<label for="animate<%= cid %>">Animate</label>
-			</li>
-			<li>
-				<input type="checkbox" id="showBorders<%= cid %>" <%= showBorders ? 'checked="checked"' : '' %> />
-				<label for="showBorders<%= cid %>">Show borders</label>
-			</li>
-		</ul>
-
-		<hr />
-
-		<button class="pure-button startButton">Start &raquo;</button>
+		<button class="btn btn-primary startButton">Start &raquo;</button>
 	</div>
 
 	<div>
-		<canvas class="canvas" width="500" height="500" style="border: 1px solid #999999; background-color:#ffffff;"></canvas>
+		<canvas class="canvas" style="border: 1px solid #999999; background-color:#ffffff;"></canvas>
 	</div>
 </script>
 
 <script src="js/libs/jquery.min.js"></script>
+<script src="js/libs/modernizr.min.js"></script>
+<script src="js/libs/html5slider.js"></script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/models/spirograph.js"></script>

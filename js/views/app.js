@@ -7,20 +7,53 @@ app.MainView = Backbone.View.extend({
 		this.listenTo(app.Spirographs, 'add', this.addSpirograph);
 		app.Spirographs.create();
 		app.Spirographs.create();
+		app.Spirographs.create();
 
-		//app.SpirographList.fetch();
+		this.onResize();
+		var currView = this;
+		$(window).on("resize", function() {
+			currView.onResize();
+		});
 	},
 
-	events: {
+	// sigh... oh flexbox, when will you be better supported?
+	onResize: function() {
+		var width = $(document).width() - 20; // 20 = padding
+		var liWidth = width / 3;
+		$("#spirographs>li").css("width", liWidth);
 
-	},
-
-	render: function() {
-
+		var settingsHeight = $($("#spirographs .well")[0]).height();
+		var height = $(document).height() - 110 - settingsHeight; // 70 + 15 pixel padding
+		$("#spirographs canvas").css("height", height);
 	},
 
 	addSpirograph: function(spirograph) {
 		var view = new app.SpirographView({ model: spirograph });
-		$('#spirographs').append( view.render().el );
+		$('#spirographs').append(view.render().el);
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
