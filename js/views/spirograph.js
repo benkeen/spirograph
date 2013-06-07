@@ -16,11 +16,20 @@ app.SpirographView = Backbone.View.extend({
 	k: null,
 	interval: null,
 	canvas: null,
+	outerRadius: 300, // should be set to null
+	currStatus: "inactive",
+
+	// DOM elements
+	$actionButton: null,
+	$innerRadiusSlider: null,
+	$pointFromCenterSlider: null,
+	$speedSlider: null,
+
 
 	template: _.template($('#spirograph-template').html()),
 
 	initialize: function() {
-		this.listenTo(this.model, 'change', this.render);
+		//this.listenTo(this.model, 'change', this.render);
 	},
 
 	render: function() {
@@ -28,21 +37,49 @@ app.SpirographView = Backbone.View.extend({
 		params.cid = this.model.cid;
 
 		this.$el.html(this.template(params));
-		this.canvas = $(this.$el).find(".canvas")[0];
-		this.ctx    = this.canvas.getContext("2d");
-		this.convertToCartesian();
+		this.$actionButton = $(this.$el).find(".actionButton");
+		this.$innerRadiusSlider = $(this.$el).find(".innerRadius");
+		this.$pointFromCenterSlider = $(this.$el).find(".pointFromCenter");
+		this.$speedSlider = $(this.$el).find(".speed");
+
+		// now catch any changes that occur to the sliders and map them to our model
+		this.addObservableInputs();
+		this.resetCanvas();
+		this.showSpirographCircles();
 
 		return this;
 	},
 
 	events: {
-		"click .startButton": "updateSpirograph"
+		"click .actionButton": "updateSpirograph"
 	},
 
-	// convert to regular cartesian coordinates
-	convertToCartesian: function() {
+	addObservableInputs: function() {
+		var currView = this;
+		this.$innerRadiusSlider.on("change", function() {
+			currView.model.set({
+				innerRadius: this.value
+			});
+		});
+		this.$pointFromCenterSlider.on("change", function() {
+			currView.model.set({
+				pointFromCenter: this.value
+			});
+		});
+		this.$speedSlider.on("change", function() {
+			currView.model.set({
+				speed: this.value
+			});
+		});
+	},
+
+	resetCanvas: function() {
+		this.canvas = $(this.$el).find("canvas")[0];
+		this.ctx    = this.canvas.getContext("2d");
+
 		this.ctx.centerX = this.canvas.width / 2;
 		this.ctx.centerY = this.canvas.height / 2;
+		this.outerRadius = (this.canvas.width / 2) - 20;
 
 		// move the center to the middle of the canvas and invert the axis so it appears to
 		// draw the spirograph in the right order
@@ -50,32 +87,28 @@ app.SpirographView = Backbone.View.extend({
 		this.ctx.scale(1, -1);
 	},
 
+	showSpirographCircles: function() {
+
+	},
+
 	// draw the spirograph
 	draw: function() {
 
-		if (this.model.attributes.showBorders) {
-			this.ctx.beginPath();
-			this.ctx.strokeStyle = "black";
-			this.ctx.lineWidth = 0.05;
-			this.ctx.arc(0, 0, this.model.attributes.outerRadius, 0, (Math.PI*180) * 360, false);
-			this.ctx.stroke();
-			this.ctx.closePath();
-		}
+//		this.setCenter();
+//			this.ctx.beginPath();
+//			this.ctx.strokeStyle = "black";
+//			this.ctx.lineWidth = 0.05;
+//			this.ctx.arc(0, 0, this.outerRadius, 0, (Math.PI*180) * 360, false);
+//			this.ctx.stroke();
+//			this.ctx.closePath();
 
 		// now start drawing the spirograph
 		this.theta = 0;
 
-		// figure out when we need to stop loopin'
-		this.max = (this.model.attributes.innerRadius / this.greatestCommonDivisor(this.model.attributes.outerRadius, this.model.attributes.innerRadius));
-
-		if (this.model.attributes.animate) {
-			var currView = this;
-			this.interval = setInterval(function() { currView.nextLine(); }, 30);
-		} else {
-			for (var i=0; i<1000; i++) {
-				this.nextLine();
-			}
-		}
+		// figure out when we need to stop looping
+		this.max = (this.model.attributes.innerRadius / this.greatestCommonDivisor(this.outerRadius, this.model.attributes.innerRadius));
+		var currView = this;
+		this.interval = setInterval(function() { currView.nextLine(); }, 30);
 	},
 
 	nextLine: function() {
@@ -97,17 +130,17 @@ app.SpirographView = Backbone.View.extend({
 	},
 
 	batchedLineTo: function() {
-		var val1 = this.theta * (1 - this.model.attributes.outerRadius / this.model.attributes.innerRadius);
-		var val2 = this.model.attributes.innerRadius - this.model.attributes.outerRadius;
-		var x = Math.cos(this.theta) * val2 + this.model.attributes.penPoint * Math.cos(val1);
-		var y = Math.sin(this.theta) * val2 + this.model.attributes.penPoint * Math.sin(val1);
+		var val1 = this.theta * (1 - this.outerRadius / this.model.attributes.innerRadius);
+		var val2 = this.model.attributes.innerRadius - this.outerRadius;
+		var x = Math.cos(this.theta) * val2 + this.model.attributes.pointFromCenter * Math.cos(val1);
+		var y = Math.sin(this.theta) * val2 + this.model.attributes.pointFromCenter * Math.sin(val1);
 		this.ctx.moveTo(x, y);
 
 		this.theta += 0.01;
-		val1 = this.theta * (1 - this.model.attributes.outerRadius / this.model.attributes.innerRadius);
-		val2 = this.model.attributes.innerRadius - this.model.attributes.outerRadius;
-		x = Math.cos(this.theta) * val2 + this.model.attributes.penPoint * Math.cos(val1);
-		y = Math.sin(this.theta) * val2 + this.model.attributes.penPoint * Math.sin(val1);
+		val1 = this.theta * (1 - this.outerRadius / this.model.attributes.innerRadius);
+		val2 = this.model.attributes.innerRadius - this.outerRadius;
+		x = Math.cos(this.theta) * val2 + this.model.attributes.pointFromCenter * Math.cos(val1);
+		y = Math.sin(this.theta) * val2 + this.model.attributes.pointFromCenter * Math.sin(val1);
 		this.ctx.lineTo(x, y);
 	},
 
@@ -115,7 +148,14 @@ app.SpirographView = Backbone.View.extend({
 		if (this.interval !== null) {
 			clearInterval(this.interval);
 		}
-		this.draw();
+
+		if (this.currStatus === "inactive") {
+			this.$actionButton.removeClass("btn-primary").addClass("btn-danger").html("Stop");
+			this.currStatus = "active";
+			this.draw();
+		} else {
+			this.$actionButton.removeClass("btn-danger").addClass("btn-primary").html("Start &raquo;");
+		}
 	},
 
 	greatestCommonDivisor: function(a, b) {

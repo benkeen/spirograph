@@ -4,15 +4,12 @@ app.Spirograph = Backbone.Model.extend({
 
 	// the default settings for the spirograph
 	defaults: {
-		outerRadius: 250,
-		innerRadius: 182,
-		penPoint: 182,
-		speed: 100,
-		animate: true,
-		showBorders: false
+		innerRadius: 60,
+		pointFromCenter: 50,
+		speed: 100
 	},
 
-	// prevents sending Model changes server-side
+	// prevents sending Model changes server-side [will add in local storage later]
 	sync: function() { return false; }
 
 });

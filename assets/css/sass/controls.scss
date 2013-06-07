@@ -1,0 +1,62 @@
+#spirographs {
+	margin: 0px;
+	list-style-type: none;
+}
+#spirographs label {
+	white-space: nowrap;
+}
+#spirographs ul {
+	list-style-type: none;
+	margin: 0px;
+}
+#spirographs>li {
+	padding: 0 0 0 5px;
+	float: left;
+}
+#spirographs input[type=range] {
+	width: 100%;
+}
+#spirographs input[type=checkbox] {
+	margin-right: 10px;
+}
+body .navbar .brand {
+	padding: 13px 20px;
+}
+body .well {
+	background: rgba(0, 0, 0, 0.3);
+	box-shadow: 0 1px 4px rgba(40, 40, 40, 0.8);
+	border: 0px;
+	margin-bottom: 5px;
+	padding: 12px;
+}
+body .navbar {
+	margin-bottom: 5px;
+}
+body .table {
+	margin-bottom: 10px;
+
+	td {
+		padding: 5px;
+	}
+}
+.canvasWrapper {
+	background-color: white;
+}
+.rangeTip {
+	font-size: 7pt;
+	color: #666666;
+
+	margin: 0px;
+	list-style-type: none;
+
+	li {
+		line-height: 14px;
+
+		&.rangeTipLeft {
+			float: left;
+		}
+		&.rangeTipRight {
+			float: right;
+		}
+	}
+}

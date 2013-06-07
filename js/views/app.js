@@ -5,6 +5,7 @@ app.MainView = Backbone.View.extend({
 
 	initialize: function() {
 		this.listenTo(app.Spirographs, 'add', this.addSpirograph);
+
 		app.Spirographs.create();
 		app.Spirographs.create();
 		app.Spirographs.create();
@@ -23,8 +24,18 @@ app.MainView = Backbone.View.extend({
 		$("#spirographs>li").css("width", liWidth);
 
 		var settingsHeight = $($("#spirographs .well")[0]).height();
-		var height = $(document).height() - 110 - settingsHeight; // 70 + 15 pixel padding
-		$("#spirographs canvas").css("height", height);
+		var height = $(document).height() - 110 - settingsHeight;
+		$(".canvasWrapper").css("height", height);
+
+		var canvasWrapperWidth = $($(".canvasWrapper")[0]).width();
+		if (height > canvasWrapperWidth) {
+			$("canvas").height(canvasWrapperWidth);
+		} else {
+			$("canvas").width(height);
+		}
+
+		// important!!!!
+		//this.trigger("window:resize");
 	},
 
 	addSpirograph: function(spirograph) {
