@@ -18,8 +18,12 @@
 						<li class="active"><a href="#">Home</a></li>
 						<li><a href="https://github.com/benkeen/spirograph">Github</a></li>
 					</ul>
+					<ul class="nav pull-right">
+						<li class="divider-vertical"></li>
+						<li><a href="#" id="drawAll">Draw all</a></li>
+						<li><a href="#" id="addSpirograph">Add &raquo;</a></li>
+					</ul>
 				</div>
-				<button class="btn btn-primary" style="margin: 10px 0px;float:right">Draw all &raquo;</button>
 			</div>
 		</div>
 	</div>
@@ -30,41 +34,79 @@
 </section>
 
 <script type="text/template" id="spirograph-template">
-	<div class="well">
-		<table class="table">
-			<tr>
-				<td><label for="innerRadius<%= cid %>">Inner Radius</label></td>
-				<td>
-					<input type="range" class="innerRadius" id="innerRadius<%= cid %>" value="<%= innerRadius %>" min="10" max="200" />
-					<ol class="rangeTip">
-						<li class="rangeTipLeft">Small</li>
-						<li class="rangeTipRight">Large</li>
-					</ol>
-				</td>
-			</tr>
-			<tr>
-				<td><label for="pointFromCenter<%= cid %>">Point from Center</label></td>
-				<td>
-					<input type="range" class="pointFromCenter" id="pointFromCenter<%= cid %>" value="<%= pointFromCenter %>" min="0" max="100" />
-					<ol class="rangeTip">
-						<li class="rangeTipLeft">Small</li>
-						<li class="rangeTipRight">Large</li>
-					</ol>
-				</td>
-			</tr>
-			<tr>
-				<td><label for="speed<%= cid %>">Speed</label></td>
-				<td>
-					<input type="range" class="speed" id="speed<%= cid %>" value="<%= speed %>" min="10" max="300" />
-					<ol class="rangeTip">
-						<li class="rangeTipLeft">Slow</li>
-						<li class="rangeTipRight">Fast</li>
-					</ol>
-				</td>
-			</tr>
-		</table>
+	<div class="spiro-tabs">
+		<div class="spiro-controls">
+			<a href="#" class="destroy" title="Close this spirograph panel">x</a>
+		</div>
+		<ol>
+			<li <%= (currTab == "general") ? 'class="selected"' : "" %>><a href="#" data-tab="general">General</a></li>
+			<li <%= (currTab == "styles") ? 'class="selected"' : "" %>><a href="#" data-tab="styles">Styles</a></li>
+		</ol>
+	</div>
 
-		<button class="btn btn-primary actionButton">Draw &raquo;</button>
+	<section class="tabContent">
+		<div class="generalTabContent well <%= (currTab == "general") ? 'visible' : "" %>">
+			<table class="table">
+				<tr>
+					<td><label for="innerCircleSizePercentage<%= cid %>">Inner Circle Size</label></td>
+					<td>
+						<input type="range" class="innerCircleSizePercentage" id="innerCircleSizePercentage<%= cid %>" value="<%= innerCircleSizePercentage %>" min="1" max="99" />
+						<ol class="rangeTip">
+							<li class="rangeTipLeft">Small</li>
+							<li class="rangeTipRight">Large</li>
+						</ol>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="pointFromCenterPercentage<%= cid %>">Point from Center</label></td>
+					<td>
+						<input type="range" class="pointFromCenterPercentage" id="pointFromCenterPercentage<%= cid %>" value="<%= pointFromCenterPercentage %>" min="1" max="99" />
+						<ol class="rangeTip">
+							<li class="rangeTipLeft">Small</li>
+							<li class="rangeTipRight">Large</li>
+						</ol>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="speed<%= cid %>">Speed</label></td>
+					<td>
+						<input type="range" class="speed" id="speed<%= cid %>" value="<%= speed %>" min="10" max="300" />
+						<ol class="rangeTip">
+							<li class="rangeTipLeft">Slow</li>
+							<li class="rangeTipRight">Fast</li>
+						</ol>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="stylesTabContent tabContent well <%= (currTab == "styles") ? 'visible' : "" %>">
+			<table class="table">
+				<tr>
+					<td><label for="lineThickness<%= cid %>">Line Thickness</label></td>
+					<td>
+						<input type="range" class="lineThickness" id="lineThickness<%= cid %>" value="<%= lineThickness %>" min="1" step="1" max="10" />
+						<ol class="rangeTip">
+							<li class="rangeTipLeft">Thin</li>
+							<li class="rangeTipRight">Thick</li>
+						</ol>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="lineTransparency<%= cid %>">Line Transparency</label></td>
+					<td>
+						<input type="range" class="lineTransparency" id="lineTransparency<%= cid %>" value="<%= lineTransparency %>" min="0.01" step="0.01" max="1" />
+						<ol class="rangeTip">
+							<li class="rangeTipLeft">Transparent</li>
+							<li class="rangeTipRight">Solid</li>
+						</ol>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+
+	<div class="well well-small">
+		<button class="btn-small btn-primary actionButton">Draw &raquo;</button>
 	</div>
 
 	<div class="canvasWrapper">
@@ -73,12 +115,12 @@
 </script>
 
 <script src="js/libs/jquery.min.js"></script>
-<script src="js/libs/modernizr.min.js"></script>
 <script src="js/libs/html5slider.js"></script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/models/spirograph.js"></script>
 <script src="js/collections/spirographs.js"></script>
+<script src="js/views/navbar.js"></script>
 <script src="js/views/spirograph.js"></script>
 <script src="js/views/app.js"></script>
 <script src="js/app.js"></script>
