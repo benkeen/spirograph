@@ -13,7 +13,6 @@ app.MainView = Backbone.View.extend({
 			this.onResize();
 		}, this);
 
-		// add a brand new spirograph
 		Backbone.on("spirograph:add", function() {
 			app.Spirographs.create();
 			this.onResize();
@@ -22,17 +21,22 @@ app.MainView = Backbone.View.extend({
 		app.Spirographs.create({
 			speed: 50,
 			pointFromCenterPercentage: 20,
-			innerCircleSizePercentage: 20
+			innerCircleSizePercentage: 20,
+			lineColorHex: "#007bc9"
 		});
 		app.Spirographs.create({
 			speed: 80,
 			pointFromCenterPercentage: 50,
-			innerCircleSizePercentage: 40
+			innerCircleSizePercentage: 50,
+			lineTransparency: 0.2,
+			lineColorHex: "#10ad00"
 		});
 		app.Spirographs.create({
 			speed: 250,
-			pointFromCenterPercentage: 90,
-			innerCircleSizePercentage: 90
+			pointFromCenterPercentage: 88,
+			innerCircleSizePercentage: 60,
+			lineThickness: 1,
+			lineColorHex: "#bf0404"
 		});
 
 		this.onResize();
@@ -40,6 +44,14 @@ app.MainView = Backbone.View.extend({
 		$(window).on("resize", function() {
 			currView.onResize();
 		});
+
+		// if the query string contains #autorun, pub the drawAll event
+		if (window.location.href.match(/#/)) {
+			var hash = window.location.href.split("#")[1].replace(/^t/, "");
+			if (hash === "autorun") {
+				Backbone.trigger("spirograph:drawAll");
+			}
+		}
 	},
 
 	// *sigh*... oh flexbox, when will you be better supported?
@@ -56,11 +68,11 @@ app.MainView = Backbone.View.extend({
 
 		var canvasWrapperWidth = $($(".canvasWrapper")[0]).width();
 		if (canvasWrapperHeight > canvasWrapperWidth) {
-			$("canvas").each(function() {
+			$("canvas.spiroCanvas").each(function() {
 				this.height = this.width = canvasWrapperWidth;
 			});
 		} else {
-			$("canvas").each(function() {
+			$("canvas.spiroCanvas").each(function() {
 				this.height = this.width = canvasWrapperHeight;
 			});
 		}

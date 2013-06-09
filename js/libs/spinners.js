@@ -9,7 +9,7 @@
 
 // TODO: Add background option that creates a ring, disabled by default:
 //       background: { color: '#fff', opacity: .5, padding: 3 }
-// TODO: Only draw at 60fps for a more accurate rotation time, in some
+// TODO: Only draw at 60fps for a more accurate rotation time, in some 
 //       cases frames should be skipped.
 // TODO: Add support for simple and complex gradients to the color option:
 //       color: ['#ff000', '#00ff00', '#0000ff']

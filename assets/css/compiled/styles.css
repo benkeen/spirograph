@@ -55,7 +55,7 @@ body .well-small {
   margin-bottom: 0px; }
 
 body .table {
-  margin-bottom: 10px; }
+  margin-bottom: 0px; }
   body .table td {
     padding: 5px; }
 
@@ -121,6 +121,26 @@ body .table {
 
 .tabContent > div {
   display: none;
-  min-height: 135px; }
+  min-height: 125px; }
   .tabContent > div.visible {
     display: block; }
+
+.spinner {
+  float: right;
+  width: 26px;
+  height: 26px;
+  display: block; }
+
+/** colorpicker */
+body .input-append .add-on,
+body .input-prepend .add-on {
+  padding: 0px;
+  border: 2px solid #CCCCCC;
+  height: inherit; }
+
+body .cpicker {
+  margin: 0px; }
+
+body .cpicker input {
+  width: 60px;
+  font-size: 8pt; }

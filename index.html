@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/compiled/styles.css" rel="stylesheet">
+	<link href="assets/css/colorpicker.css" rel="stylesheet">
 </head>
 <body>
 
@@ -101,16 +102,26 @@
 						</ol>
 					</td>
 				</tr>
+				<tr>
+					<td><label for="lineColour<%= cid %>">Line Colour</label></td>
+					<td>
+						<div class="cpicker input-append color" data-color="<%= lineColorHex %>" data-color-format="hex" id="lineColour<%= cid %>">
+							<input type="text" class="span2" value="<%= lineColorHex %>" />
+							<span class="add-on"><i style="background-color: <%= lineColorHex %>"></i></span>
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</section>
 
 	<div class="well well-small">
+		<span class="spinner"></span>
 		<button class="btn-small btn-primary actionButton">Draw &raquo;</button>
 	</div>
 
 	<div class="canvasWrapper">
-		<canvas></canvas>
+		<canvas class="spiroCanvas"></canvas>
 	</div>
 </script>
 
@@ -118,6 +129,8 @@
 <script src="js/libs/html5slider.js"></script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
+<script src="js/libs/bootstrap-colorpicker.js"></script>
+<script src="js/libs/spinners.js"></script>
 <script src="js/models/spirograph.js"></script>
 <script src="js/collections/spirographs.js"></script>
 <script src="js/views/navbar.js"></script>

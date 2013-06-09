@@ -1,0 +1,6 @@
+/** colorpicker */
+body .input-append .add-on,
+body .input-prepend .add-on {
+  padding: 0px;
+  border: 2px solid #CCCCCC;
+  height: inherit; }

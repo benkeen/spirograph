@@ -19,7 +19,6 @@
 #spirographs input[type=checkbox] {
 	margin-right: 10px;
 }
-
 body .well {
 	background: rgba(0, 0, 0, 0.3);
 	box-shadow: 0 1px 4px rgba(40, 40, 40, 0.8);
@@ -35,7 +34,7 @@ body .well-small {
 }
 
 body .table {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 
 	td {
 		padding: 5px;
@@ -124,9 +123,16 @@ body .table {
 
 .tabContent>div {
 	display: none;
-	min-height: 135px;
+	min-height: 125px;
 
 	&.visible {
 		display: block;
 	}
+}
+
+.spinner {
+	float: right;
+	width: 26px;
+	height: 26px;
+	display: block;
 }

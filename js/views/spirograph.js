@@ -17,6 +17,7 @@ app.SpirographView = Backbone.View.extend({
 	interval: null,
 	canvas: null,
 	currStatus: "inactive",
+	spinner: null,
 
 	// DOM elements
 	$actionButton: null,
@@ -26,6 +27,7 @@ app.SpirographView = Backbone.View.extend({
 	$speedSlider: null,
 	$lineThickness: null,
 	$lineTransparency: null,
+	$colorpicker: null,
 
 
 	template: _.template($('#spirograph-template').html()),
@@ -56,7 +58,10 @@ app.SpirographView = Backbone.View.extend({
 		this.$lineThickness = $(this.$el).find(".lineThickness");
 		this.$lineTransparency = $(this.$el).find(".lineTransparency");
 
-		this.showSpirographCircles();
+
+		this.showSpirographOutline();
+		this.initSpinner();
+		this.initColorpicker();
 
 		return this;
 	},
@@ -72,6 +77,40 @@ app.SpirographView = Backbone.View.extend({
 		"click li a": "onSelectTab"
 	},
 
+
+	initSpinner: function() {
+		if (this.spinner !== null) {
+			return;
+		}
+		this.spinner = Spinners.create($(this.$el).find(".spinner")[0], {
+			radius: 5,
+			height: 7,
+			width: 1.5,
+			dashes: 14,
+			opacity: 1,
+			padding: 0,
+			rotation: 1400,
+			fadeOutSpeed: 0,
+			color: '#efefef',
+			pauseColor: '#444444',
+			pauseOpacity: 1
+		}).pause();
+	},
+
+	initColorpicker: function() {
+		this.$colorpicker = $(this.$el).find(".cpicker").colorpicker();
+		var currModel = this.model;
+		this.$colorpicker.on('changeColor', function(e) {
+			var rgb = e.color.toRGB();
+			currModel.set({
+				lineColor: { r: rgb.r, g: rgb.g, b: rgb.b }
+			});
+		});
+		var cp = this.$colorpicker;
+		$(this.$el).find(".cpicker input").on("focus", function() {
+			cp.data("colorpicker").show();
+		});
+	},
 
 	onChangeInnerCircleSize: function() {
 		this.model.set({
@@ -111,7 +150,7 @@ app.SpirographView = Backbone.View.extend({
 	},
 
 	resetCanvas: function() {
-		this.canvas = $(this.$el).find("canvas")[0];
+		this.canvas = $(this.$el).find("canvas.spiroCanvas")[0];
 		this.canvas.width = this.canvas.width;
 		this.ctx    = this.canvas.getContext("2d");
 
@@ -140,9 +179,18 @@ app.SpirographView = Backbone.View.extend({
 			lineThickness: parseInt($(this.$lineThickness).val(), 10),
 			lineTransparency: this._getLineTransparency()
 		});
+
+		var colorRGB = this.$colorpicker.data("colorpicker").color.toRGB();
+		this.model.set({
+			lineColor: {
+				r: colorRGB.r,
+				g: colorRGB.g,
+				b: colorRGB.b
+			}
+		});
 	},
 
-	showSpirographCircles: function() {
+	showSpirographOutline: function() {
 
 	},
 
@@ -155,15 +203,14 @@ app.SpirographView = Backbone.View.extend({
 		this.interval = setInterval(function() { currView.nextLine(); }, 30);
 	},
 
-	resetControls: function() {
-		this.$actionButton.removeClass("btn-danger").addClass("btn-primary").html("Draw &raquo;");
-		this.currStatus = "inactive";
-	},
-
 	nextLine: function() {
 		this.ctx.beginPath();
 		this.ctx.lineWidth = this.model.attributes.lineThickness;
-		this.ctx.strokeStyle = "rgba(50, 150, 255, 0.5)"; //" + this.model.attributes.lineTransparency
+		this.ctx.strokeStyle = "rgba(" +
+			this.model.attributes.lineColor.r + ", " +
+			this.model.attributes.lineColor.g + ", " +
+			this.model.attributes.lineColor.b + ", " +
+			this.model.attributes.lineTransparency + ")";
 
 		for (var i=0; i<this.model.attributes.speed; i++) {
 			if (this.theta / Math.PI / 2 > this.max) {
@@ -174,7 +221,6 @@ app.SpirographView = Backbone.View.extend({
 		this.ctx.stroke();
 
 		if (this.theta / (Math.PI * 2) > this.max) {
-			clearInterval(this.interval);
 			this.resetControls();
 		}
 	},
@@ -203,7 +249,8 @@ app.SpirographView = Backbone.View.extend({
 		this.updateModel();
 
 		if (this.currStatus === "inactive") {
-			this.$actionButton.removeClass("btn-primary").addClass("btn-danger").html("Stop");
+			this.$actionButton.removeClass("btn-primary");
+			this.spinner.play();
 			this.currStatus = "active";
 			this.draw();
 		} else {
@@ -212,6 +259,8 @@ app.SpirographView = Backbone.View.extend({
 	},
 
 	onSelectTab: function(e) {
+		e.preventDefault();
+
 		$(this.$el).find(".spiro-tabs li").removeClass("selected");
 		$(this.$el).find(".tabContent>div").removeClass("visible");
 
@@ -222,6 +271,13 @@ app.SpirographView = Backbone.View.extend({
 		this.model.set({
 			currTab: tab
 		});
+	},
+
+	resetControls: function() {
+		clearInterval(this.interval);
+		this.$actionButton.addClass("btn-primary");
+		this.currStatus = "inactive";
+		this.spinner.pause();
 	},
 
 
@@ -255,7 +311,7 @@ app.SpirographView = Backbone.View.extend({
 
 	_getLineTransparency: function() {
 		var lineTransparency = parseFloat($(this.$lineTransparency).val());
-		return lineTransparency.toFixed(1);
+		return lineTransparency.toFixed(2);
 	}
 
 });
