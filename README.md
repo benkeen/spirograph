@@ -7,13 +7,14 @@ idiomatically un-Backboney, I'd love to hear about it!
 
 ## Demo
 
-Soon to be online.
+[http://benkeen.github.io/spirograph/](http://benkeen.github.io/spirograph/)
 
 
 ## License
 
 GPL, baby.
 
+- - -
 
 Ben Keen
 [@vancouverben](https://twitter.com/#!/vancouverben)
