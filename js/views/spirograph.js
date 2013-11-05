@@ -58,7 +58,6 @@ app.SpirographView = Backbone.View.extend({
 		this.$lineThickness = $(this.$el).find(".lineThickness");
 		this.$lineTransparency = $(this.$el).find(".lineTransparency");
 
-
 		this.showSpirographOutline();
 		this.initSpinner();
 		this.initColorpicker();
@@ -313,5 +312,4 @@ app.SpirographView = Backbone.View.extend({
 		var lineTransparency = parseFloat($(this.$lineTransparency).val());
 		return lineTransparency.toFixed(2);
 	}
-
 });
