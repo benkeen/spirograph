@@ -144,3 +144,12 @@ body .cpicker {
 body .cpicker input {
   width: 60px;
   font-size: 8pt; }
+
+.brand span {
+  color: #333333; }
+
+#frameworkName {
+  color: #999999; }
+
+body .navbar .brand {
+  width: 250px; }
