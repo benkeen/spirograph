@@ -7,7 +7,7 @@ something un-idiomatic to that framework, let me know!
 ## Demo
 
 Backbone - [http://benkeen.github.io/spirograph/](http://benkeen.github.io/spirograph/backbone/)
-AngularJS - [http://benkeen.github.io/spirograph/](http://benkeen.github.io/spirograph/angular/)
+AngularJS - [http://benkeen.github.io/spirograph/](http://benkeen.github.io/spirograph/angular/) (incomplete!)
 
 ## License
 
