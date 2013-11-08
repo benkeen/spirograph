@@ -1,7 +1,5 @@
-var app = app || {};
+'use strict';
 
-$(function() {
-	// instantiate our Views
-	new app.NavBarView();
-	new app.MainView();
-});
+var spirographApp = angular.module('spirographApp', []);
+
+
