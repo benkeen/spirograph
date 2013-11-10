@@ -1,13 +1,12 @@
 'use strict';
 
 
-
 spirographApp.directive("drawall", function() {
 	return {
 		restrict: "A",
 		link: function(scope, element) {
 			element.on("click", function() {
-				console.log("DRAW ALL");
+				//ng.$rootScope.$broadcast("spirograph:drawAll")
 			});
 		}
 	}
@@ -18,7 +17,7 @@ spirographApp.directive("addspirograph", function() {
 		restrict: "A",
 		link: function(scope, element) {
 			element.on("click", function() {
-				console.log("ADD SPIROGRAPH");
+				//ng.$rootScope.$broadcast("spirograph:add")
 			});
 		}
 	}

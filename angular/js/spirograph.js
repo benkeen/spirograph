@@ -1,5 +1,7 @@
 var app = app || {};
 
+
+
 /**
 * Our main View. Right now this doesn't contain much: but the idea is that at some point
 * we'll add the ability to have multiple spirographs on screen at a time.
