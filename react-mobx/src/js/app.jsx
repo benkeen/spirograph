@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import store from './store';
 import Header from './header';
-import Panels from './spirographs';
+import Panels from './panels';
 import C from './constants';
 
 
@@ -20,10 +20,11 @@ class App extends React.Component {
     }
 
     render () {
+        const { store } = this.props;
         return (
             <div className="body-content">
-                <Header store={this.props.store} />
-                <Panels store={this.props.store} />
+                <Header store={store} />
+                <Panels store={store} />
             </div>
         )
     }

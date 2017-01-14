@@ -152,7 +152,6 @@ var Panel = (_class3 = function Panel(store, params) {
     this.id = id;
 
     _lodash2.default.each(Object.keys(params), function (key) {
-        console.log(key, ' = ', params[key]);
         _this2[key] = params[key];
     });
 } // immutable

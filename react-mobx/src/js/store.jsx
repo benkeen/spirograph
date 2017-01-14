@@ -1,4 +1,4 @@
-import { observable, action, asStructure } from 'mobx';
+import { observable, action } from 'mobx';
 import uuid from 'node-uuid';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -55,11 +55,11 @@ class Panel {
         this.id = id;
 
         _.each(Object.keys(params), (key) => {
-            console.log(key, ' = ', params[key]);
             this[key] = params[key];
         });
     }
 }
+
 
 // return a singleton store
 export default new Store();

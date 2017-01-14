@@ -23,9 +23,9 @@ var _header = require('./header');
 
 var _header2 = _interopRequireDefault(_header);
 
-var _spirographs = require('./spirographs');
+var _panels = require('./panels');
 
-var _spirographs2 = _interopRequireDefault(_spirographs);
+var _panels2 = _interopRequireDefault(_panels);
 
 var _constants = require('./constants');
 
@@ -58,11 +58,13 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
+            var store = this.props.store;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'body-content' },
-                _react2.default.createElement(_header2.default, { store: this.props.store }),
-                _react2.default.createElement(_spirographs2.default, { store: this.props.store })
+                _react2.default.createElement(_header2.default, { store: store }),
+                _react2.default.createElement(_panels2.default, { store: store })
             );
         }
     }]);
@@ -76,7 +78,7 @@ var App = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(App, { store: _store2.default }), document.getElementById('app'));
 
 
-},{"./constants":2,"./header":3,"./spirographs":4,"./store":5,"lodash":123,"react":296,"react-dom":145}],2:[function(require,module,exports){
+},{"./constants":2,"./header":3,"./panels":4,"./store":5,"lodash":123,"react":296,"react-dom":145}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -830,7 +832,6 @@ var Panel = (_class3 = function Panel(store, params) {
     this.id = id;
 
     _lodash2.default.each(Object.keys(params), function (key) {
-        console.log(key, ' = ', params[key]);
         _this2[key] = params[key];
     });
 } // immutable

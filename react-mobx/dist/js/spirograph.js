@@ -1,34 +1,20 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _mobxReact = require('mobx-react');
 
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
-
-var _store = require('./store');
-
-var _store2 = _interopRequireDefault(_store);
-
-var _header = require('./header');
-
-var _header2 = _interopRequireDefault(_header);
-
-var _panels = require('./panels');
-
-var _panels2 = _interopRequireDefault(_panels);
-
-var _constants = require('./constants');
-
-var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,41 +24,35 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_React$Component) {
-    _inherits(App, _React$Component);
+var Spirograph = function (_React$Component) {
+    _inherits(Spirograph, _React$Component);
 
-    // populate the store with the default panels
-    function App(props) {
-        _classCallCheck(this, App);
+    function Spirograph() {
+        _classCallCheck(this, Spirograph);
 
-        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-        _lodash2.default.each(_constants2.default.DEFAULT_PANEL_CUSTOMIZATIONS, function (panel) {
-            var settings = Object.assign({}, _constants2.default.PANEL_DEFAULTS, panel);
-            props.store.addPanel(settings);
-        });
-        return _this;
+        return _possibleConstructorReturn(this, (Spirograph.__proto__ || Object.getPrototypeOf(Spirograph)).apply(this, arguments));
     }
 
-    _createClass(App, [{
+    _createClass(Spirograph, [{
+        key: 'draw',
+        value: function draw() {
+            this.theta = 0;
+            this.max = this._getMaxLoops(); // figure out when we need to stop looping
+
+            var currView = this;
+            this.interval = setInterval(function () {
+                currView.nextLine();
+            }, 30);
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var store = this.props.store;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'body-content' },
-                _react2.default.createElement(_header2.default, { store: store }),
-                _react2.default.createElement(_panels2.default, { store: store })
-            );
+            return _react2.default.createElement('section', null);
         }
     }]);
 
-    return App;
+    return Spirograph;
 }(_react2.default.Component);
 
-// initialize the whole shebang
-
-
-_reactDom2.default.render(_react2.default.createElement(App, { store: _store2.default }), document.getElementById('app'));
-//# sourceMappingURL=app.js.map
+exports.default = Spirograph;
+//# sourceMappingURL=spirograph.js.map
