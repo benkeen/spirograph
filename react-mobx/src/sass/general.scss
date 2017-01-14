@@ -1,0 +1,22 @@
+body {
+	padding: 0px;
+	font-family: sans-serif;
+	line-height: 17pt;
+	color: #efefef;
+	background-image: url(../../images/debut_dark.png);
+	background-repeat: repeat;
+	overflow: hidden;
+}
+section {
+	padding: 0;
+}
+body .navbar .brand {
+	padding: 13px 20px;
+	width: 170px;
+}
+body .navbar {
+	margin-bottom: 5px;
+}
+.hidden {
+	display: none;
+}

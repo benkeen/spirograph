@@ -1,0 +1,215 @@
+body, #app {
+  height: 100%;
+}
+
+.body-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.body-content > header {
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+}
+.body-content > section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.body-content > section > ol {
+  flex: 1;
+}
+
+body {
+  padding: 0px;
+  font-family: sans-serif;
+  line-height: 17pt;
+  color: #efefef;
+  background-image: url(../../images/debut_dark.png);
+  background-repeat: repeat;
+  overflow: hidden;
+}
+
+section {
+  padding: 0;
+}
+
+body .navbar .brand {
+  padding: 13px 20px;
+  width: 170px;
+}
+
+body .navbar {
+  margin-bottom: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+#spirographs {
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+#spirographs label {
+  white-space: nowrap;
+}
+#spirographs ul {
+  list-style-type: none;
+  margin: 0;
+}
+#spirographs > li {
+  padding: 0 0 0 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+#spirographs > li .canvasWrapper {
+  flex: 1;
+}
+#spirographs input[type=range] {
+  width: 100%;
+}
+#spirographs input[type=checkbox] {
+  margin-right: 10px;
+}
+
+body .well {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(40, 40, 40, 0.8);
+  border: 0px;
+  margin-bottom: 5px;
+  padding: 18px 12px 12px;
+  position: relative;
+  clear: both;
+}
+body .well-small {
+  padding: 5px;
+  margin-bottom: 0;
+}
+body .table {
+  margin-bottom: 0;
+}
+body .table td {
+  padding: 5px;
+}
+
+.canvasWrapper {
+  background-color: white;
+  text-align: center;
+}
+
+.rangeTip {
+  font-size: 7pt;
+  color: #666666;
+  margin: 0;
+  list-style-type: none;
+}
+.rangeTip li {
+  line-height: 14px;
+}
+.rangeTip li.rangeTipLeft {
+  float: left;
+}
+.rangeTip li.rangeTipRight {
+  float: right;
+}
+
+.spiro-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  background: rgba(51, 7, 7, 0.3);
+  border-radius: 4px;
+  text-align: center;
+}
+.spiro-controls a {
+  color: #555555;
+  display: block;
+}
+.spiro-controls a:hover {
+  color: white;
+  text-decoration: none;
+}
+.spiro-controls:hover {
+  background-color: #EB0000;
+}
+
+.spiro-tabs {
+  position: relative;
+}
+.spiro-tabs ol {
+  list-style-type: none;
+  margin: 0px;
+}
+.spiro-tabs ol li {
+  float: left;
+  width: 35%;
+  margin-right: 1px;
+  text-align: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 9pt;
+  cursor: pointer;
+}
+.spiro-tabs ol li a {
+  color: #555555;
+  line-height: 17pt;
+  display: block;
+}
+.spiro-tabs ol li a:hover {
+  color: #cccccc;
+  text-decoration: none;
+}
+.spiro-tabs ol li.selected {
+  background: rgba(0, 0, 0, 0.3);
+}
+.spiro-tabs ol li.selected a {
+  color: #888888;
+}
+
+.tabContent > div {
+  min-height: 125px;
+}
+
+.spinner {
+  float: right;
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+/** colorpicker */
+body .input-append .add-on,
+body .input-prepend .add-on {
+  padding: 0px;
+  border: 2px solid #CCCCCC;
+  height: inherit;
+}
+
+body .cpicker {
+  margin: 0px;
+}
+
+body .cpicker input {
+  width: 60px;
+  font-size: 8pt;
+}
+
+.brand span {
+  color: #333333;
+}
+
+#frameworkName {
+  color: #999999;
+}
+
+body .navbar .brand {
+  width: 250px;
+}
+
+/*# sourceMappingURL=styles.css.map */
